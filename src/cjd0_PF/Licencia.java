@@ -68,6 +68,7 @@ public class Licencia extends JFrame implements ActionListener, ChangeListener{
 	}
 	
 	public void stateChange(ChangeEvent e){
+		if(check1.isSelected()==true) {}
 	}
 	public void actionPerformed(ActionEvent e){
 		if(e.getSource()==btn1) {}

@@ -102,7 +102,7 @@ public class Principal extends JFrame implements ActionListener{
 		lTitle.setForeground(cBlanco);
 		add(lTitle);
 		
-		//Labels+TextArea
+		//Labels +TextArea || +ComboBox
 		lNombre = new JLabel("Nombre Completo");
 		lNombre.setBounds(25, 188, 180, 25);
 		lNombre.setFont(fAMono12);
@@ -170,11 +170,47 @@ public class Principal extends JFrame implements ActionListener{
 			cbAntiguedad.addItem("2 a 6 años de Servicio");
 			cbAntiguedad.addItem("7 años o más de servicio");
 		add(cbAntiguedad);
+		
+		lResultado = new JLabel("Resultado del Calculo");
+		lResultado.setBounds(220, 307, 180, 25);
+		lResultado.setFont(fAMono12);
+		lResultado.setForeground(cBlanco);
+		add(lResultado);
+		ta1 = new JTextArea();
+		ta1.setEditable(false);
+		ta1.setBackground(c224x3);
+		ta1.setFont(new Font("Andale Mono", 1, 11));
+		ta1.setForeground(cRojo);
+		ta1.setText("\n\tAquí aparece el Resultado del calculo de vacaciones.");
+		sp1 = new JScrollPane(ta1);
+		sp1.setBounds(220, 333, 385, 90);
+		add(sp1);
+		
+		lFooter = new JLabel("©2017 The Coca-Cola company | Todos los derechos reservados");
+		lFooter.setBounds(135, 445, 500, 30);
+		lFooter.setFont(fAMono12);
+		lFooter.setForeground(cBlanco);
+		add(lFooter);
+	}
+	
+	public void actionPerformed(ActionEvent e){
+		if( e.getSource()==miCalculo ) {}
+		if( e.getSource()==miNegro ) {}
+		if( e.getSource()==miMorado ) {}
+		if( e.getSource()==miNuevo ) {}
+		if( e.getSource()==miSalir ) {}
+		if( e.getSource()==miElCreador ) {}
+	}
+	public void stateChange(ChangeEvent e){
 	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
+		Principal winPrincipal = new Principal();
+		winPrincipal.setBounds(0, 0, 640, 535);
+		winPrincipal.setVisible(true);
+		winPrincipal.setResizable(false);
+		winPrincipal.setLocationRelativeTo(null);
 	}
 
 }
