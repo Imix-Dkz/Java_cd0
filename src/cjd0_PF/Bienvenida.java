@@ -7,9 +7,12 @@ public class Bienvenida extends JFrame implements ActionListener{
 	private JTextField txtField1;
 	private JLabel lbl1, lbl2, lbl3, lbl4;
 	private JButton btn1;
+	//Se añade variable de texto de uso general... 
+	public static String texto = "";
 	
 	public Bienvenida() {
 		setLayout(null);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("Bienvenido!!!");
 		Color clrCoca = new Color(255, 0, 0);
 		Color clrBlanco = new Color(255, 255, 255);
@@ -60,6 +63,20 @@ public class Bienvenida extends JFrame implements ActionListener{
 	
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource( )== btn1) {
+			//trim(), le quita los espacios de inicio y fin de la cadena
+			texto = txtField1.getText().trim();
+			if( texto.equals("") ) {
+				JOptionPane.showMessageDialog(null, "Debes Ingresar tu nombre");
+			}else{ //Se Crea la interfaz de TyC 
+				Licencia winLicencia = new Licencia();
+				winLicencia.setBounds(0, 0, 610, 380);
+				winLicencia.setVisible(true);
+				winLicencia.setResizable(false);
+				winLicencia.setLocationRelativeTo(null);
+				
+				//Se desactiva la ventana de bienvenida 
+				this.setVisible(false);
+			}
 			
 		}
 	}

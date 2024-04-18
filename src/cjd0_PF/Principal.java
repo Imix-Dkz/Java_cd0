@@ -13,17 +13,22 @@ public class Principal extends JFrame implements ActionListener{
 	private JComboBox cbDepartamento, cbAntiguedad;
 	private JScrollPane sp1;
 	private JTextArea ta1;
-	private Color cRojo = new Color(255, 0, 0);
-	private Color cBlanco = new Color(255, 255, 255);
-	private Color c224x3 = new Color(224, 224, 224);
+	private Color cRojo = new Color(255, 0, 0), cBlanco = new Color(255, 255, 255),
+			cNegro = new Color(0, 0, 0), cMorado = new Color(51, 0, 51), c224x3 = new Color(224, 224, 224);
 	private Font fAMono14 = new Font("Andale Mono", 1, 14);
 	private Font fAMono12 = new Font("Andale Mono", 1, 12);
+	String nombreUsr = "";
 	
 	public Principal() {
 		setLayout(null);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("Pantalla Principal");
 		getContentPane().setBackground(cRojo);
 		setIconImage( new ImageIcon( getClass().getResource("images/icon.png") ).getImage() );
+		
+		//Se obtiene el valor de la variable "texto" de la ventana "winBienvenida"
+		Bienvenida winBienvenida = new Bienvenida();
+		nombreUsr = winBienvenida.texto;
 		
 		//Sección del Menú
 		mb = new JMenuBar();
@@ -90,7 +95,7 @@ public class Principal extends JFrame implements ActionListener{
 		lLogo.setBounds(5, 5, 250, 100);
 		add(lLogo);
 		
-		lBienvenido = new JLabel("Bienvenido");
+		lBienvenido = new JLabel("Bienvenido "+nombreUsr);
 		lBienvenido.setBounds(280, 30, 300, 50);
 		lBienvenido.setFont(new Font("Andale Mono", 1, 32));
 		lBienvenido.setForeground(cBlanco);
@@ -194,12 +199,79 @@ public class Principal extends JFrame implements ActionListener{
 	}
 	
 	public void actionPerformed(ActionEvent e){
-		if( e.getSource()==miCalculo ) {}
-		if( e.getSource()==miNegro ) {}
-		if( e.getSource()==miMorado ) {}
-		if( e.getSource()==miNuevo ) {}
-		if( e.getSource()==miSalir ) {}
-		if( e.getSource()==miElCreador ) {}
+		if( e.getSource()==miCalculo ) {
+			String nombreTbj = tfNombreTrabajador.getText();
+			String AP = tfAPaternoTrabajador.getText();
+			String AM = tfAMaternoTrabajador.getText();
+			String Departamento = cbDepartamento.getSelectedItem().toString();
+			String Antiguedad = cbAntiguedad.getSelectedItem().toString();
+			
+			if( nombreTbj.equals("") || AP.equals("") || AM.equals("") || Departamento.equals("") || Antiguedad.equals("") ) {
+				JOptionPane.showMessageDialog(null, "Debes de llenar todos los campos");
+			}else{
+				String strMensaje = "El trabajador "+nombreTbj
+						+"\n que trabaja en "+Departamento
+						+", con "+Antiguedad+"\n recibe: ";
+				//Se crea una Matriz de datos para simplificar las operaciones vacacionales
+				int[][] PuestoDias = { //Van de 1, 2~6, 7+ años de servicio
+						{ 6, 14, 20 }, //Atencion al Cliente
+						{ 7, 15, 22 }, //Departamento de Logistica
+						{10, 20, 30 }, //Departamento de Gerencia
+				};
+				
+				if( Departamento.equals("Atención al Cliente") ) {
+					if(Antiguedad.equals("1 Año de Servicio"))
+						{ ta1.setText( strMensaje +PuestoDias[0][0]+" días de vacaciones"); }
+					if(Antiguedad.equals("2 a 6 años de Servicio"))
+						{ ta1.setText( strMensaje +PuestoDias[0][1]+" días de vacaciones"); }
+					if(Antiguedad.equals("7 años o más de servicio"))
+						{ ta1.setText( strMensaje +PuestoDias[0][2]+" días de vacaciones"); }
+				}
+				if( Departamento.equals("Departamento de Logística") ) {
+					if(Antiguedad.equals("1 Año de Servicio"))
+						{ ta1.setText( strMensaje +PuestoDias[1][0]+" días de vacaciones"); }
+					if(Antiguedad.equals("2 a 6 años de Servicio"))
+						{ ta1.setText( strMensaje +PuestoDias[1][1]+" días de vacaciones"); }
+					if(Antiguedad.equals("7 años o más de servicio"))
+						{ ta1.setText( strMensaje +PuestoDias[1][2]+" días de vacaciones"); }					
+				}
+				if( Departamento.equals("Departamento de Gerencia") ) {
+					if(Antiguedad.equals("1 Año de Servicio"))
+						{ ta1.setText( strMensaje +PuestoDias[2][0]+" días de vacaciones"); }
+					if(Antiguedad.equals("2 a 6 años de Servicio"))
+						{ ta1.setText( strMensaje +PuestoDias[2][1]+" días de vacaciones"); }
+					if(Antiguedad.equals("7 años o más de servicio"))
+						{ ta1.setText( strMensaje +PuestoDias[2][2]+" días de vacaciones"); }					
+				}
+			}
+		}
+		if( e.getSource()==miRojo ) { getContentPane().setBackground(cRojo); }
+		if( e.getSource()==miNegro ){ getContentPane().setBackground(cNegro); }
+		if( e.getSource()==miMorado){ getContentPane().setBackground(cMorado); }
+		if( e.getSource()==miNuevo ){ //Se limpian campos
+			tfNombreTrabajador.setText("");
+			tfAPaternoTrabajador.setText("");
+			tfAMaternoTrabajador.setText("");
+			cbDepartamento.setSelectedIndex(0);
+			cbAntiguedad.setSelectedIndex(0);
+			ta1.setText("\n\tAquí aparece el Resultado del calculo de vacaciones.");
+		}
+		if( e.getSource()==miSalir ){
+			Bienvenida winBienvenida = new Bienvenida();
+			winBienvenida.setBounds(0, 0, 350, 450);
+			winBienvenida.setVisible(true);
+			winBienvenida.setResizable(false);
+			winBienvenida.setLocationRelativeTo(null);
+			
+			this.setVisible(false);
+		}
+		if( e.getSource()==miElCreador ) {
+			JOptionPane.showMessageDialog(null, "Desarrollado usando como base la \"La Geekipedia de Ernesto\""
+					+"\n www.youtube.com/ErnestoPerezM"
+					+"\n Actualizado y con modificaciones personales de: Darketzer"
+					+"\n https://twitter.com/Darketzer"
+					+"\n https://github.com/Imix-Dkz");
+		}
 	}
 	public void stateChange(ChangeEvent e){
 	}

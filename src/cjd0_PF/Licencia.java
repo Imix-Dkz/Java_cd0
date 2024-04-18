@@ -10,11 +10,17 @@ public class Licencia extends JFrame implements ActionListener, ChangeListener{
 	private JButton btn1, btn2;
 	private JScrollPane scrollPane1;
 	private JTextArea txtArea1;
+	String nombre = "";
 	
 	public Licencia(){
 		setLayout(null);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("Licencia de uso");
 		setIconImage(new ImageIcon(getClass().getResource("images/icon.png")).getImage());
+		
+		//Se obtiene el valor de la variable "texto" de la ventana "winBienvenida"
+		Bienvenida winBienvenida = new Bienvenida();
+		nombre = winBienvenida.texto;
 		
 		lbl1 = new JLabel("TÉRMINOS Y CONDICIONES");
 		lbl1.setBounds(215, 5, 200, 30);
@@ -44,7 +50,7 @@ public class Licencia extends JFrame implements ActionListener, ChangeListener{
 		scrollPane1.setBounds(10, 40, 575, 200);
 		add(scrollPane1);
 		
-		check1 = new JCheckBox("Yo Acepto");
+		check1 = new JCheckBox("Yo "+nombre+" Acepto");
 		check1.setBounds(10, 250, 300, 30);
 		check1.addChangeListener(this);
 		add(check1);
@@ -66,13 +72,34 @@ public class Licencia extends JFrame implements ActionListener, ChangeListener{
 		lbl2.setBounds(310, 135, 300, 300);
 		add(lbl2);
 	}
-	
-	public void stateChange(ChangeEvent e){
-		if(check1.isSelected()==true) {}
+	public void stateChanged(ChangeEvent e) {
+		if(check1.isSelected()==true) {
+			btn1.setEnabled(true);
+			btn2.setEnabled(false);
+		}else {
+			btn1.setEnabled(false);
+			btn2.setEnabled(true);
+		}
 	}
 	public void actionPerformed(ActionEvent e){
-		if(e.getSource()==btn1) {}
-		if(e.getSource()==btn2) { System.exit(0); }
+		if(e.getSource()==btn1){
+			Principal winPrincipal = new Principal();
+			winPrincipal.setBounds(0, 0, 640, 535);
+			winPrincipal.setVisible(true);
+			winPrincipal.setResizable(false);
+			winPrincipal.setLocationRelativeTo(null);
+			
+			this.setVisible(false);
+		}
+		if(e.getSource()==btn2){ //System.exit(0);
+			Bienvenida winBienvenida = new Bienvenida();
+			winBienvenida.setBounds(0, 0, 350, 450);
+			winBienvenida.setVisible(true);
+			winBienvenida.setResizable(false);
+			winBienvenida.setLocationRelativeTo(null);
+			
+			this.setVisible(false);
+		}
 	}
 
 	public static void main(String[] args) {
@@ -83,5 +110,4 @@ public class Licencia extends JFrame implements ActionListener, ChangeListener{
 		winLicencia.setResizable(false);
 		winLicencia.setLocationRelativeTo(null);
 	}
-
 }
